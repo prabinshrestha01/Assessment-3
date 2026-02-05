@@ -74,6 +74,14 @@ def _write_image_any_path(path: str, img_bgr: np.ndarray) -> bool:
 
 class ImageEditorApp:
     """
+    main GUI for image editor application.
+
+    The main purpose of this class is:
+    - creating and managing tkinter gui components
+    - handeling the interactions of the users
+    - the dispaly of image
+    - connecting the image processing and history management to the GUI actions
+    - proprer implementation of redo and undo funcationality
     Main GUI class.
     Demonstrates OOP requirements:
       - Encapsulation: internal state (current image, path, history)
@@ -83,6 +91,18 @@ class ImageEditorApp:
     """
 
     def __init__(self, root: tk.Tk) -> None:
+        """
+        Set us main application window and al ui components. Initialize state.
+
+        type root: tk.Tk
+        purpose
+        - window size and title is set up
+        - image processor and history manager are initialized
+        - menu, layout, controls are built
+        - keyboard shortcuts are built
+        - display default messages.
+        
+        """
         self.root = root
         self.root.title("HIT137 Assignment 3 - Image Editor")
         self.root.geometry("1100x700")
@@ -268,6 +288,17 @@ class ImageEditorApp:
 
     # ---------- File actions ----------
     def open_image(self) -> None:
+        """
+        open an image file and load it into the editor. Supported formats: JPG, PNG, BMP.
+
+        steps:
+        Open file dialog to select an image
+        makes sure the selected file is of supported format
+        checks image using opencv
+        store the image in the memory     
+        shows the image in the canvas
+        update the status bar with image info (filename, path, dimensions) 
+        """
         path = filedialog.askopenfilename(
             title="Open Image",
             filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp"), ("All files", "*.*")]
@@ -291,6 +322,10 @@ class ImageEditorApp:
         self._refresh_display()
 
     def save_image(self) -> None:
+        """
+        saves the current image to disk. If the image was opened from a file, it saves back to that file. If it's a new image or if saving fails, it prompts "Save As" dialog.
+        display appropriate messages for success or failure. Supported formats: JPG, PNG, BMP.
+        """
         if self.current_img_bgr is None:
             messagebox.showwarning("Nothing to save", "Please open an image first.")
             return
