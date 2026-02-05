@@ -1,8 +1,5 @@
 """
-processor.py
-Image processing operations implemented with OpenCV (cv2).
-
-All functions are pure: they take an image (numpy array, BGR) and return a new image.
+this module defines the ImageProcessor class, which encapsulates all the image processing functionalities required by the assignment using OpenCV. It provides static methods for various operations such as converting to grayscale, applying Gaussian blur, performing Canny edge detection, adjusting brightness and contrast, rotating, flipping, and resizing images. Each method takes an input image in BGR format (as used by OpenCV) and returns a processed image in the same format. The class also includes a utility method to ensure that pixel values are properly clipped and cast to uint8 format. The ImageInfo dataclass is a simple container for metadata about the currently loaded image, including its file path and dimensions, along with a property to return a formatted string of the image size.
 """
 
 from __future__ import annotations
@@ -27,7 +24,13 @@ class ImageInfo:
 
 
 class ImageProcessor:
-    """Encapsulates all OpenCV image processing features required by the assignment."""
+    """
+    it encapsulates all the image processing functionalities required by the assignment using OpenCV. 
+    It provides static methods for various operations such as converting to grayscale, applying Gaussian blur, performing Canny edge detection, adjusting brightness and contrast, rotating, flipping, and resizing images. 
+    Each method takes an input image in BGR format (as used by OpenCV) and returns a processed image in the same format. 
+    The class also includes a utility method to ensure that pixel values are properly clipped and cast to uint8 format. 
+    The ImageInfo dataclass is a simple container for metadata about the currently loaded image, including its file path and dimensions, along with a property to return a formatted string of the image size.
+    """
 
     # ---------- Utilities ----------
     @staticmethod
