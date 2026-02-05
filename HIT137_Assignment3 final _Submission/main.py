@@ -1,6 +1,18 @@
 """
 main.py
-HIT137 Group Assignment 3 - Desktop Image Editor (Tkinter + OpenCV)
+Desktop Image Editor (Tkinter + OpenCV)
+This is the main application file for the desktop image editor. It provides a GUI for users to open, edit, and save images using various filters and transformations. The application is built with Tkinter for the interface and OpenCV for image processing. We have also demostated object oriented programming like encapsulation, class interaction and so on.
+
+features:
+- open save and save as in jpg, png and bmp formats.
+- image preview
+-Gaussian blur, bightness and contrast adjustment with slider
+-edge detection with canny
+-image rotation (90, 180, and 270 degrees)
+-image resizing
+- horizontal and vertical flipping
+- undo and redo functionality
+- keyboard shortcuts
 
 How to run:
     python main.py
