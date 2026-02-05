@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog, ttk
 
 # Import our custom classes (Integration)
-from processor import ImageProcessor
-from history import HistoryManager
+from Practice_Code.processor import ImageProcessor
+from Practice_Code.history import HistoryManager
 
 class ImageEditorApp:
     def __init__(self, root):
