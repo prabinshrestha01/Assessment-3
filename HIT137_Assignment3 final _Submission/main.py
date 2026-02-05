@@ -6,7 +6,10 @@ How to run:
     python main.py
 
 Dependencies:
-    pip install opencv-python pillow numpy
+   these are the things you need to install torun this code. use pip to install them
+    pip install opencv-python 
+    pip install pillow
+    pip install numpy
 """
 
 from __future__ import annotations
