@@ -342,6 +342,9 @@ class ImageEditorApp:
         self._update_status_from_image()
 
     def save_as_image(self) -> None:
+        """
+        if there is an image loaded, open a "Save As" dialog to save the current image to a new file. Supported formats: JPG, PNG, BMP. Update the status bar with the new path and filename after saving.
+        """
         if self.current_img_bgr is None:
             messagebox.showwarning("Nothing to save", "Please open an image first.")
             return
@@ -401,6 +404,15 @@ class ImageEditorApp:
         return True
 
     def apply_grayscale(self) -> None:
+        """
+        convert the current image into grayscale.
+        function:
+        - Checks if an image is loaded, if not, shows a warning.
+        - save the current image to history which might be used for undo later
+        - applies grayscale filter using the image processor
+        - refreshes the image
+
+        """
         if not self._require_image():
             return
         self.history.push(self.current_img_bgr)
@@ -408,6 +420,11 @@ class ImageEditorApp:
         self._refresh_display()
 
     def apply_blur(self) -> None:
+        """
+        - applies a Gaussian blur to the current image.
+        - blur intensity is determined by the value of the blur slider (0-50).
+        - save the current image to history before applying the blur for undo functionality.
+        """
         if not self._require_image():
             return
         intensity = int(self.blur_var.get())
@@ -416,6 +433,9 @@ class ImageEditorApp:
         self._refresh_display()
 
     def apply_edges(self) -> None:
+        """
+        applies Canny edge detection to the current image. Prompts the user to input two threshold values for the Canny algorithm. Saves the current image to history before applying the edge detection for undo functionality.
+        """
         if not self._require_image():
             return
         t1 = simpledialog.askinteger("Canny Edge Detection", "Threshold 1 (e.g., 50):", minvalue=0, maxvalue=500)
@@ -429,6 +449,11 @@ class ImageEditorApp:
         self._refresh_display()
 
     def apply_brightness_contrast(self) -> None:
+        """
+        -Adjusts the brightness and contrast of the current image based on the values of the respective sliders. 
+        -The brightness slider ranges from -100 to 100, while the contrast slider ranges from 0.5 to 3.0.
+        -Before applying the adjustments, it saves the current image to history for undo functionality.
+        """
         if not self._require_image():
             return
         beta = int(self.brightness_var.get())
@@ -440,6 +465,11 @@ class ImageEditorApp:
         self._refresh_display()
 
     def apply_rotate(self, degrees: int) -> None:
+        """
+        this function rotates the current image by a specified number of degrees (90, 180, or 270). 
+        -It first checks if an image is loaded, and if so, it saves the current image to history for undo functionality. 
+        -It applies the rotation using the image processor and refreshes the display to show the updated image.
+        """
         if not self._require_image():
             return
         self.history.push(self.current_img_bgr)
@@ -447,6 +477,11 @@ class ImageEditorApp:
         self._refresh_display()
 
     def apply_flip(self, mode: str) -> None:
+        """
+        this function flips the current image either horizontally or vertically based on the specified mode ("horizontal" or "vertical").
+        -It checks if an image is loaded, and if so, it saves the current image.
+        -It applies the flip using the image processor and refreshes the display to show the updated image.
+        """
         if not self._require_image():
             return
         self.history.push(self.current_img_bgr)
