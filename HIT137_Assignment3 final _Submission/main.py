@@ -104,7 +104,7 @@ class ImageEditorApp:
         
         """
         self.root = root
-        self.root.title("HIT137 Assignment 3 - Image Editor")
+        self.root.title("Image Editor")
         self.root.geometry("1100x700")
         self.root.minsize(900, 600)
 
@@ -119,7 +119,7 @@ class ImageEditorApp:
         self._build_menu()
         self._build_layout()
         self._build_controls()
-        self._set_status("Ready. Open an image to begin.")
+        self._set_status("Ready. Open an image to start.")
 
         # Set up keyboard shortcuts for common operations
         self.root.bind_all("<Control-o>", lambda e: self.open_image())
@@ -372,11 +372,17 @@ class ImageEditorApp:
         self._update_status_from_image()
 
     def _on_exit(self) -> None:
+        """
+        this function is called when the user tries to exit the application. It prompts the user with a confirmation dialog to prevent accidental closure. If the user confirms, it destroys the main application window, effectively closing the application.
+        """
         if messagebox.askokcancel("Exit", "Are you sure you want to exit?"):
             self.root.destroy()
 
     # ---------- Undo/Redo ----------
     def undo(self) -> None:
+        """
+        this function implements the undo functionality. It checks if there is a current image loaded, and if so, it retrieves the previous state of the image from the history manager. If there is a previous state available, it updates the current image to that state and refreshes the display. If there is no previous state to undo to, it shows an informational message to the user.
+        """
         if self.current_img_bgr is None:
             return
         prev = self.history.undo(self.current_img_bgr)
@@ -387,6 +393,8 @@ class ImageEditorApp:
         self._refresh_display()
 
     def redo(self) -> None:
+        """
+        this function implements the redo functionality. It checks if there is a current image loaded, and if so, it retrieves the next state of the image from the history manager. If there is a next state available, it updates the current image to that state and refreshes the display. If there is no next state to redo to, it shows an informational message to the user."""
         if self.current_img_bgr is None:
             return
         nxt = self.history.redo(self.current_img_bgr)
@@ -489,6 +497,9 @@ class ImageEditorApp:
         self._refresh_display()
 
     def apply_resize(self) -> None:
+        """
+        this function resizes the current image to new dimensions specified by the user.
+        """
         if not self._require_image():
             return
         h, w = self.current_img_bgr.shape[:2]
@@ -502,8 +513,14 @@ class ImageEditorApp:
         self.current_img_bgr = self.processor.resize(self.current_img_bgr, new_w, new_h)
         self._refresh_display()
 
-    # ---------- Live preview helpers (do NOT push to history) ----------
+    # ---------- Live preview helpers (does NOT push to history) ----------
     def _preview_blur(self) -> None:
+        """
+        this function provides a live preview of the Gaussian blur effect as the user adjusts the blur intensity slider. 
+         -It checks if an image is loaded, and if so, it applies the Gaussian blur to a temporary copy of the current image using the intensity value from the slider. 
+         -The preview is rendered on the canvas without changing the actual current image or pushing to history, allowing users to see the effect before applying it.
+         -It also updates the status bar with the current image information.
+        """
         if self.current_img_bgr is None:
             return
         # Preview by applying blur on top of a temporary base.
@@ -514,6 +531,12 @@ class ImageEditorApp:
         self._update_status_from_image()
 
     def _preview_brightness_contrast(self) -> None:
+        """
+        this function provides a live preview of the brightness and contrast adjustments as the user moves the respective sliders.
+        -It checks if an image is loaded, and if so, it applies the brightness and contrast adjustments to a temporary copy of the current image using the values from the sliders.
+        -The preview is rendered on the canvas without modifying the actual current image or pushing to history, allowing users to see the effect before applying it.
+        -It also updates the status bar with the current image information.
+        """
         if self.current_img_bgr is None:
             return
         beta = int(self.brightness_var.get())
@@ -524,6 +547,10 @@ class ImageEditorApp:
         self._update_status_from_image()
 
     def reset_sliders(self, silent: bool = False) -> None:
+        """
+        this function resets the blur, brightness, and contrast sliders to their default values (0 for blur and brightness, 1.0 for contrast).
+        -If the "silent" parameter is set to True, it will reset the sliders without refreshing the display, allowing for batch operations without intermediate updates. If "silent" is False, it will also refresh the display to reflect the reset slider values.
+        """
         self.blur_var.set(0)
         self.brightness_var.set(0)
         self.contrast_var.set(1.0)
@@ -533,7 +560,7 @@ class ImageEditorApp:
     # ---------- Help ----------
     def show_help(self) -> None:
         msg = (
-            "HIT137 Assignment 3 - Image Editor\n\n"
+            "Image Editor\n\n"
             "Features implemented:\n"
             "• Open/Save/Save As (JPG, PNG, BMP)\n"
             "• Undo/Redo\n"
