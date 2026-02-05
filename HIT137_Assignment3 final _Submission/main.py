@@ -37,8 +37,8 @@ import cv2
 import numpy as np
 from PIL import Image, ImageTk
 
-from Practice_Code.processor import ImageProcessor, ImageInfo
-from Practice_Code.history import HistoryManager
+from processor import ImageProcessor, ImageInfo
+from history import HistoryManager
 
 # Define supported image file formats
 SUPPORTED_EXTS = (".jpg", ".jpeg", ".png", ".bmp")
