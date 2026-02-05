@@ -25,7 +25,7 @@ from PIL import Image, ImageTk
 from processor import ImageProcessor, ImageInfo
 from history import HistoryManager
 
-
+# Define supported image file formats
 SUPPORTED_EXTS = (".jpg", ".jpeg", ".png", ".bmp")
 
 
@@ -73,12 +73,12 @@ class ImageEditorApp:
         self.root.geometry("1100x700")
         self.root.minsize(900, 600)
 
-        # Core state
+        # Core state: image data and undo/redo system
         self.processor = ImageProcessor()
         self.history = HistoryManager(max_states=30)
         self.current_img_bgr: Optional[np.ndarray] = None
         self.current_path: Optional[str] = None
-        self._tk_img: Optional[ImageTk.PhotoImage] = None  # keep reference
+        self._tk_img: Optional[ImageTk.PhotoImage] = None  # keep reference to prevent garbage collection
 
         # UI
         self._build_menu()
@@ -86,7 +86,7 @@ class ImageEditorApp:
         self._build_controls()
         self._set_status("Ready. Open an image to begin.")
 
-        # Keyboard shortcuts
+        # Set up keyboard shortcuts for common operations
         self.root.bind_all("<Control-o>", lambda e: self.open_image())
         self.root.bind_all("<Control-s>", lambda e: self.save_image())
         self.root.bind_all("<Control-Shift-S>", lambda e: self.save_as_image())
